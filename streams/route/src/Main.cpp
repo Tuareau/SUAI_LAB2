@@ -2,6 +2,8 @@
 #include "IOHandler.h"
 #include "RoutesArrayHandler.h"
 
+#include <array>
+
 int main()
 {
     RouteArray arr;
@@ -11,4 +13,8 @@ int main()
         continue;
     }
     return 0;
+
+
+    std::array<int, 10> arra;
+    arra.data();
 }

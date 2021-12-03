@@ -142,12 +142,13 @@
     <ClCompile Include="src\IOHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Route.cpp" />
+    <ClCompile Include="src\RoutesArrayHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Array.h" />
     <ClInclude Include="src\IInput.h" />
     <ClInclude Include="src\IOHandler.h" />
     <ClInclude Include="src\Route.h" />
-    <ClInclude Include="src\RouteArray.h" />
     <ClInclude Include="src\RoutesArrayHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -20,12 +20,12 @@
     <ClCompile Include="src\IOHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RoutesArrayHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Route.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RouteArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IOHandler.h">
@@ -35,6 +35,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RoutesArrayHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
