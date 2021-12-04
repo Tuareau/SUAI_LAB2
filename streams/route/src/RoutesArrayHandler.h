@@ -37,6 +37,7 @@ public:
 	bool contains_route(size_t number) const;
 
 	void show_routes() const;
+	void show_routes_with_place(const std::string & place);
 
 	void run();
 

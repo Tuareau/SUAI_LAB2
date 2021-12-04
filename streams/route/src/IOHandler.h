@@ -15,6 +15,7 @@ public:
 
 	Route get_route() const;
 	size_t get_route_number() const;
+	std::string get_place_name() const;
 };
 
 #endif

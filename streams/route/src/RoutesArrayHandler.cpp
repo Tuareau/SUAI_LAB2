@@ -39,9 +39,8 @@ void RoutesArrayHandler::run() {
 		}
 		case IOHandler::Action::FIND:
 		{
-			auto number = this->_iohandler.get_route_number();
-			auto route = this->find_route(number);
-			this->show_route(route);
+			auto place = this->_iohandler.get_place_name();
+			this->show_routes_with_place(place);
 		}
 		case IOHandler::Action::SHOW:
 		{
@@ -133,5 +132,24 @@ void RoutesArrayHandler::show_routes() const {
 		if (iter->filled == Some::EXIST) {
 			this->show_route(iter->route);
 		}
+	}
+}
+
+void RoutesArrayHandler::show_routes_with_place(const std::string & place) {
+	auto begin = this->_route_array->begin();
+	auto end = this->_route_array->end();
+	auto found = false;
+	for (auto iter = begin; iter != end; ++iter) {
+		if (iter->filled == Some::EXIST) {
+			auto start = iter->route.start();
+			auto end = iter->route.end();
+			if (place == start || place == end) {
+				this->show_route(iter->route);
+				found = true;
+			}
+		}
+	}
+	if (!found) {
+		std::cout << "\n\t- no routes\n";
 	}
 }

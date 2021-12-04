@@ -20,6 +20,12 @@ size_t IOHandler::get_route_number() const {
 	return number;
 }
 
+std::string IOHandler::get_place_name() const {
+	IInput<std::string> str_in;
+	std::cout << "\nPut start, end and number:\n";
+	return str_in.getValueFromInput();
+}
+
 IOHandler::Action IOHandler::get_action() const {
 	using std::cout;
 	cout << "\n\tROUTES\n";
