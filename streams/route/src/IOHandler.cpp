@@ -6,9 +6,11 @@ Route IOHandler::get_route() const {
 	cout << "\n\tUp to 8 routes can be created\n";
 
 	IInput<std::string> str_in;
-	cout << "\nPut start, end and number:\n";
+	cout << "\nPut start: ";
 	auto start = str_in.getValueFromInput();
+	cout << "\nPut end: ";
 	auto end = str_in.getValueFromInput();
+	cout << "\nPut number: ";
 	auto number = IInput<size_t>().getValueFromInput();
 
 	return Route::make_route(start, end, number);
@@ -22,7 +24,7 @@ size_t IOHandler::get_route_number() const {
 
 std::string IOHandler::get_place_name() const {
 	IInput<std::string> str_in;
-	std::cout << "\nPut start, end and number:\n";
+	std::cout << "\nPut place: ";
 	return str_in.getValueFromInput();
 }
 

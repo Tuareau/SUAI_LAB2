@@ -49,6 +49,7 @@ void RoutesArrayHandler::run() {
 		}
 		default: break;
 		}
+		action = this->_iohandler.get_action();
 	}
 }
 
@@ -67,7 +68,7 @@ void RoutesArrayHandler::add_route(const Route & route) {
 		std::cout << "\n\tArray of routes is full\n";
 	}
 	else {
-		std::sort(begin, end, [](auto & l, auto & r) { return l.route.number() < r.route.number(); });
+		this->_route_array->sort([](auto & l, auto & r) { return l.route.number() < r.route.number(); });
 	}
 }
 
@@ -86,7 +87,7 @@ void RoutesArrayHandler::delete_route(size_t number) {
 		std::cout << "\n\tRoute not found\n";
 	}
 	else {
-		std::sort(begin, end, [](auto & l, auto & r) { return l.route.number() < r.route.number(); });
+		this->_route_array->sort([](auto & l, auto & r) { return l.route.number() < r.route.number(); });
 	}
 }
 
@@ -152,4 +153,11 @@ void RoutesArrayHandler::show_routes_with_place(const std::string & place) {
 	if (!found) {
 		std::cout << "\n\t- no routes\n";
 	}
+}
+
+void RoutesArrayHandler::show_route(const Route & route) const {
+	auto indent = std::setw(20);
+	std::cout << indent << "Start:" << indent << route.start() << std::endl;
+	std::cout << indent << "End:" << indent << route.end() << std::endl;
+	std::cout << indent << "Number:" << indent << route.number() << std::endl;
 }

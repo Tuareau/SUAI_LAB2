@@ -91,6 +91,20 @@ public:
         return _elements;
     }
 
+    template <class Pred>
+    void sort(Pred pred) {
+        T key; int i, j;
+        for (i = 1; i < _size; ++i) {
+            key = _elements[i];
+            j = i - 1;
+
+            while (j >= 0 && pred(_elements[j], key)) {
+                _elements[j + 1] = _elements[j];
+                j--;
+            }
+            _elements[j + 1] = key;
+        }
+    }
 };
 
 #endif
