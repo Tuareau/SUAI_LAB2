@@ -5,18 +5,16 @@
 #include <iostream>
 
 #include "IInput.h"
-#include "RoutesArrayHandler.h"
+#include "Route.h"
 
 class IOHandler
 {
-private:
-	RoutesArrayHandler * _handler;
-
 public:
-	explicit IOHandler(RoutesArrayHandler * route_array_handler);
-
 	enum class Action { ADD = 1, DELETE, EDIT, FIND, SHOW, QUIT };
 	Action get_action() const;
+
+	Route get_route() const;
+	size_t get_route_number() const;
 };
 
 #endif

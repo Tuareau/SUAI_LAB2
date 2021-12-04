@@ -1,7 +1,24 @@
 #include "IOHandler.h"
 
-IOHandler::IOHandler(RoutesArrayHandler * route_array_handler) 
-	: _handler(route_array_handler) {}
+Route IOHandler::get_route() const {
+	using std::cout;
+	cout << "\n\tCREATE ROUTE\n";
+	cout << "\n\tUp to 8 routes can be created\n";
+
+	IInput<std::string> str_in;
+	cout << "\nPut start, end and number:\n";
+	auto start = str_in.getValueFromInput();
+	auto end = str_in.getValueFromInput();
+	auto number = IInput<size_t>().getValueFromInput();
+
+	return Route::make_route(start, end, number);
+}
+
+size_t IOHandler::get_route_number() const {
+	std::cout << "\nPut number of route: ";
+	auto number = IInput<size_t>().getValueFromInput();
+	return number;
+}
 
 IOHandler::Action IOHandler::get_action() const {
 	using std::cout;
@@ -28,31 +45,11 @@ IOHandler::Action IOHandler::get_action() const {
 
 		system("cls");
 		switch (choice) {
-		case 1: 
-		{
-			this->_handler->add_route();
-			break;
-		}
-		case 2:
-		{
-			this->_handler->delete_route();
-			break;
-		}
-		case 3:
-		{
-			this->_handler->edit_route();
-			break;
-		}
-		case 4:
-		{
-			this->_handler->find_route();
-			break;
-		}
-		case 5: 
-		{
-			this->_handler->show_routes();
-			break;
-		}
+		case 1: return IOHandler::Action::ADD;
+		case 2: return IOHandler::Action::DELETE;
+		case 3: return IOHandler::Action::EDIT;
+		case 4: return IOHandler::Action::FIND;
+		case 5:  return IOHandler::Action::SHOW;
 		default: break;
 		}
 	}

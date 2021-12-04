@@ -21,6 +21,10 @@ public:
         }
     }
 
+    T & operator[](size_t idx) {
+        return _elements[idx];
+    }
+
     class Iterator
     {
     private:
@@ -67,7 +71,11 @@ public:
             return pointer == iter.pointer;
         }
 
-        ValueType & operator*() {
+        T * operator->() {
+            return pointer;
+        }
+
+        T & operator*() {
             return *pointer;
         }
     };

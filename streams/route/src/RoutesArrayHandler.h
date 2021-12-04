@@ -3,25 +3,42 @@
 #define _ROUTES_ARRAY_HANDLER_H_
 
 #include <string>
+#include <algorithm>
 
-#include "RouteArray.h"
+#include "IOHandler.h"
+#include "Route.h"
+#include "Array.h"
 
 class RoutesArrayHandler
 {
 private:
-	RouteArray * _route_array;
+	IOHandler _iohandler;
 
-	Route get_route() const;
+	enum class Some { EXIST, EMPTY };
+	struct Element {
+		Route route;
+		Some filled = Some::EMPTY;
+	};
+
+	static const size_t SIZE = 8;
+	Array<Element, SIZE> * _route_array;
+
+	Route & find_route(size_t number);
+	void show_route(const Route & route) const;
 
 public:
-	explicit RoutesArrayHandler(RouteArray * route_array);
+	RoutesArrayHandler(IOHandler iohandler);
+	~RoutesArrayHandler();
 
-	void add_route();
-	void delete_route();
-	void edit_route();
+	void add_route(const Route & route);
+	void delete_route(size_t number);
+	void edit_route(Route & route);
 
-	void find_route() const;
+	bool contains_route(size_t number) const;
+
 	void show_routes() const;
+
+	void run();
 
 };
 
