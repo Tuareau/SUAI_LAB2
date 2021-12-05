@@ -21,33 +21,53 @@ void RoutesArrayHandler::run() {
 		case IOHandler::Action::ADD:
 		{
 			auto route = this->_iohandler.get_route();
-			this->add_route(route);
+			if (!this->contains_route(route.number())) {
+				this->add_route(route);
+			}
+			else {
+				std::cout << "\n\tRoute with this number is added already\n";
+			}
 			break;
 		}
 		case IOHandler::Action::DELETE:
 		{
 			auto number = this->_iohandler.get_route_number();
-			this->delete_route(number);
+			if (this->contains_route(number)) {
+				this->delete_route(number);
+			}
+			else {
+				std::cout << "\n\tRoute with this number don't exist\n";
+			}
 			break;
 		}
 		case IOHandler::Action::EDIT:
 		{
 			auto number = this->_iohandler.get_route_number();
-			auto route = this->find_route(number);
-			this->edit_route(route);
+			if (this->contains_route(number)) {
+				auto route = this->find_route(number);
+				this->edit_route(route);
+			}
+			else {
+				std::cout << "\n\tRoute with this number don't exist\n";
+			}			
 			break;
 		}
 		case IOHandler::Action::FIND:
 		{
 			auto place = this->_iohandler.get_place_name();
 			this->show_routes_with_place(place);
+			break;
 		}
 		case IOHandler::Action::SHOW:
 		{
 			this->show_routes();
 			break;
 		}
-		default: break;
+		default:
+		{
+			throw std::logic_error("RoutesArrayHandler::run(): action type mismatch");
+			break;
+		}
 		}
 		action = this->_iohandler.get_action();
 	}
@@ -62,12 +82,14 @@ void RoutesArrayHandler::add_route(const Route & route) {
 			iter->route = route;
 			iter->filled = Some::EXIST;
 			added = true;
+			break;
 		}
 	}
 	if (!added) {
 		std::cout << "\n\tArray of routes is full\n";
 	}
 	else {
+		std::cout << "\n\tSuccessfuly added\n";
 		this->_route_array->sort([](auto & l, auto & r) { return l.route.number() < r.route.number(); });
 	}
 }
@@ -81,12 +103,14 @@ void RoutesArrayHandler::delete_route(size_t number) {
 			iter->route = Route();
 			iter->filled = Some::EMPTY;
 			deleted = true;
+			break;
 		}
 	}
 	if (!deleted) {
 		std::cout << "\n\tRoute not found\n";
 	}
 	else {
+		std::cout << "\n\tSuccessfuly deleted\n";
 		this->_route_array->sort([](auto & l, auto & r) { return l.route.number() < r.route.number(); });
 	}
 }
@@ -94,7 +118,6 @@ void RoutesArrayHandler::delete_route(size_t number) {
 bool RoutesArrayHandler::contains_route(size_t number) const {
 	auto begin = this->_route_array->begin();
 	auto end = this->_route_array->end();
-	auto deleted = false;
 	for (auto iter = begin; iter != end; ++iter) {
 		if (iter->filled == Some::EXIST && iter->route.number() == number) {
 			return true;
@@ -104,14 +127,10 @@ bool RoutesArrayHandler::contains_route(size_t number) const {
 }
 
 void RoutesArrayHandler::edit_route(Route & route) {
-	IInput<std::string> str_in;
 	std::cout << "\nPut new start, end and number:\n";
-	auto start = str_in.getValueFromInput();
-	auto end = str_in.getValueFromInput();
-	auto number = IInput<size_t>().getValueFromInput();
-
-	this->delete_route(number);
-	this->add_route(Route(start, end, number));
+	auto new_route = this->_iohandler.get_route();
+	this->delete_route(route.number());
+	this->add_route(new_route);
 }
 
 Route & RoutesArrayHandler::find_route(size_t number) {
@@ -126,17 +145,23 @@ Route & RoutesArrayHandler::find_route(size_t number) {
 }
 
 void RoutesArrayHandler::show_routes() const {
+	std::cout << "\n\tRoutes:\n";
 	auto begin = this->_route_array->begin();
 	auto end = this->_route_array->end();
-	auto deleted = false;
+	auto found = false;
 	for (auto iter = begin; iter != end; ++iter) {
 		if (iter->filled == Some::EXIST) {
+			found = true;
 			this->show_route(iter->route);
 		}
 	}
+	if (!found) {
+		std::cout << "\n\t- no routes in array\n";
+	}
 }
 
-void RoutesArrayHandler::show_routes_with_place(const std::string & place) {
+void RoutesArrayHandler::show_routes_with_place(const std::string & place) const {
+	std::cout << "\n\tRoutes with place " << place << std::endl;
 	auto begin = this->_route_array->begin();
 	auto end = this->_route_array->end();
 	auto found = false;
@@ -156,8 +181,9 @@ void RoutesArrayHandler::show_routes_with_place(const std::string & place) {
 }
 
 void RoutesArrayHandler::show_route(const Route & route) const {
-	auto indent = std::setw(20);
-	std::cout << indent << "Start:" << indent << route.start() << std::endl;
+	auto indent = std::setw(12);
+	std::cout << "\n" << indent << "Route #" << route.number() << std::endl;
+	std::cout << "\n" << indent << "Start:" << indent << route.start() << std::endl;
 	std::cout << indent << "End:" << indent << route.end() << std::endl;
-	std::cout << indent << "Number:" << indent << route.number() << std::endl;
+
 }

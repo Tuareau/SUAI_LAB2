@@ -1,16 +1,12 @@
 #include "IOHandler.h"
 
 Route IOHandler::get_route() const {
-	using std::cout;
-	cout << "\n\tCREATE ROUTE\n";
-	cout << "\n\tUp to 8 routes can be created\n";
-
 	IInput<std::string> str_in;
-	cout << "\nPut start: ";
+	std::cout << "\nPut start: ";
 	auto start = str_in.getValueFromInput();
-	cout << "\nPut end: ";
+	std::cout << "Put end: ";
 	auto end = str_in.getValueFromInput();
-	cout << "\nPut number: ";
+	std::cout << "Put number: ";
 	auto number = IInput<size_t>().getValueFromInput();
 
 	return Route::make_route(start, end, number);

@@ -98,7 +98,7 @@ public:
             key = _elements[i];
             j = i - 1;
 
-            while (j >= 0 && pred(_elements[j], key)) {
+            while (j >= 0 && pred(key, _elements[j])) {
                 _elements[j + 1] = _elements[j];
                 j--;
             }
